@@ -25,7 +25,6 @@ class Application {
       }));
     });
 
-    // Add special case for amazon
     applications.push({
       name: 'amazonDiscounter_2',
       state: faker.helpers.arrayElement(states)
