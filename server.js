@@ -1,20 +1,26 @@
-const express = require('express');
-const Application = require('./application');
+const express = require("express");
+const applicationRoutes = require("./routes/applications");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
-app.get('/applications', (req, res) => {
-  const applications = Application.getAllApplications();
-  res.json(applications);
+// Root route
+app.get("/", (req, res) => {
+  res.send(`
+    <h1>Application Status API</h1>
+    <p>Available endpoints:</p>
+    <ul>
+      <li><a href="/api/applications/connected">/api/applications/connected</a></li>
+      <li><a href="/api/applications/disconnected">/api/applications/disconnected</a></li>
+      <li><a href="/api/applications/idle">/api/applications/idle</a></li>
+      <li><a href="/api/applications/operational">/api/applications/operational</a></li>
+      <li><a href="/api/applications/all">/api/applications/all</a></li>
+    </ul>
+  `);
 });
 
-app.get('/applications/:state', (req, res) => {
-  const state = req.params.state;
-  const applications = Application.getByState(state);
-  res.json(applications);
-});
+app.use("/api/applications", applicationRoutes);
 
 app.listen(port, () => {
-  console.log();
+  console.log(`Server running at http://localhost:${port}`);
 });
